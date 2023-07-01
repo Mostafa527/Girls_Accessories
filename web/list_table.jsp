@@ -15,9 +15,25 @@
             HttpSession sess = request.getSession();
             ArrayList<Accessory> al = (ArrayList<Accessory>) sess.getAttribute("all");
             String msg = (String) sess.getAttribute("msg");
+            User user = (User) sess.getAttribute("user");
             
        %>
-    
+       
+           <% if(user==null) { %>
+            <h1> Project List - Hello User </h1>
+             <form action="Kuwait" method="get">
+                 <input type="submit" name="code" value="ViewCart"><br>
+                 <input type="submit" name="code" value="Sign In"><br>
+                 <input type="submit" name="code" value="Sign Up"><br>
+             </form><br>
+             <% } else { %>
+              <h1> Project List -Hello <%=user.getUname() %> </h1>
+                <form action="Kuwait" method="get">
+                 <input type="submit" name="code" value="ViewCart"><br>
+                 <input type="submit" name="code" value="SignOut"><br>
+             </form><br>
+             
+             <% } %>
        
       
        <table border="2" width="5" cellspacing="5" cellpadding="5">
