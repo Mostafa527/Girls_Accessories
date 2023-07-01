@@ -23,8 +23,13 @@ public class Cont extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
             String url = "";
             String msg = "";
-            String code = request.getParameter("code");
+              String code = request.getParameter("code");
             String anum = request.getParameter("anum");
+           String aname = request.getParameter("aname");
+            String abrand = request.getParameter("abrand");
+            String acolor = request.getParameter("acolor");
+             String aquantity = request.getParameter("aquantity");
+             String aprice = request.getParameter("aprice");
 
             HttpSession sess = request.getSession();
             if(code.equalsIgnoreCase("list")){
@@ -53,6 +58,23 @@ public class Cont extends HttpServlet {
                     sess.setAttribute("a", a);
                     sess.setAttribute("anum", anum);
                     }
+            else
+                   if(code.equalsIgnoreCase("AddNewAccessory")){
+                       Accessory a = new Accessory(anum,aname,abrand,acolor,aquantity,aprice);
+                       int result = TestAccessoryDB.addNewAccessoryRecord(a);
+                       if(result >=1){
+                             System.out.println("Insert is Ok");
+                             msg = "anum ="+anum+" insert accessory table OK";
+                            }
+                       else{
+                                 System.out.println("Insert is not Ok");
+                             msg = "anum ="+anum+" insert accessory table NOT OK";
+                       }
+                     url = "/Display_Accessory.jsp";
+                    sess.setAttribute("msg", msg);
+                    sess.setAttribute("a", a);
+                    sess.setAttribute("anum", anum);
+                   }
          
                      
           this.getServletContext().getRequestDispatcher(url).forward(request, response);
