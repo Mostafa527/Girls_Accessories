@@ -175,7 +175,60 @@ public class TestAccessoryDB {
          }
                 return result;
         }
-
+               public static User searchUserTable(String uname , String upass){
+            User user = null;
+            try{
+                Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+            String sq="'";
+            String sqlst=  "select * from usertb where uname ="+sq+uname+sq+" and upassword ="+sq+upass+sq;
+            ResultSet result = stmt.executeQuery(sqlst);
+          
+              while(result.next()){
+                 user = new User(result.getString("uid"),result.getString("uname"),result.getString("upassword"),result.getString("uemail"));
+                        
+                        
+            }
+           stmt.close();
+            conn.close();
+            }
+        catch(SQLException e){
+            for(Throwable t : e)
+            {
+                t.printStackTrace();
+            }
+        
+         }
+            return user;
+        }
+      public static int  addNewUser(User u){
+        
+             int result=0;
+            try{
+                Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+            String cm = ",";
+            String sq = "'";
+            
+            String sqlst=  "insert into usertb values("+u.getUid()+cm+sq+u.getUname()+sq+cm+sq+u.getUpassword()+sq+cm+sq+u.getUemail()+sq+")";
+             result = stmt.executeUpdate(sqlst);
+             if(result==1){
+                 System.out.println("Insert data succ into user table");
+             }
+             else{
+                 System.out.println("Problem inserting into user table");
+             }
+             
+            
+           stmt.close();
+            conn.close();
+            }
+             catch(SQLException e){
+        for(Throwable t : e){t.printStackTrace();}
+        
+         }
+            return result;
+        }
     
         
         
