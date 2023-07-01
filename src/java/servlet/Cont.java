@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import model.Accessory;
 import model.Cart;
 import model.Line;
+import model.User;
 
 
 
@@ -32,6 +33,12 @@ public class Cont extends HttpServlet {
             String acolor = request.getParameter("acolor");
              String aquantity = request.getParameter("aquantity");
              String aprice = request.getParameter("aprice");
+             
+                    String uid = request.getParameter("uid");
+               String uname = request.getParameter("uname");
+                
+             String upass = request.getParameter("upass");
+             String uemail = request.getParameter("uemail");
 
             HttpSession sess = request.getSession();
             if(code.equalsIgnoreCase("list")){
@@ -128,7 +135,7 @@ public class Cont extends HttpServlet {
                      sess.setAttribute("msg", msg);
                      url="/displaycart.jsp";
                  }
-             else
+            else
                    if(code.equalsIgnoreCase("ViewCart")){
               
                      Cart cart = (Cart) sess.getAttribute("cart");
@@ -143,7 +150,7 @@ public class Cont extends HttpServlet {
                      sess.setAttribute("msg", msg);
                      url="/displaycart.jsp";
                    }
-                    else
+            else
                    if(code.equalsIgnoreCase("+")){
               
                      Cart cart = (Cart) sess.getAttribute("cart");
@@ -153,7 +160,7 @@ public class Cont extends HttpServlet {
                      sess.setAttribute("msg", msg);
                      url="/displaycart.jsp";
                    }
-                   else
+            else
                    if(code.equalsIgnoreCase("-")){
               
                      Cart cart = (Cart) sess.getAttribute("cart");
@@ -163,7 +170,7 @@ public class Cont extends HttpServlet {
                      sess.setAttribute("msg", msg);
                      url="/displaycart.jsp";
                    }
-                   else
+            else
                    if(code.equalsIgnoreCase("x")){
               
                      Cart cart = (Cart) sess.getAttribute("cart");
@@ -173,12 +180,58 @@ public class Cont extends HttpServlet {
                      sess.setAttribute("msg", msg);
                      url="/displaycart.jsp";
                    }//end op=x
-               else
+            else
                    if(code.equalsIgnoreCase("Sign In")){
                        msg = "Sign in Registered user";
                        sess.setAttribute("msg", msg);
                        url = "/SignIn.jsp";
                    }//end op="Sign In_"
+            else
+                   if(code.equalsIgnoreCase("SignIn")){
+                       User user = TestAccessoryDB.searchUserTable(uname,upass);
+                       if(user == null){
+                                msg = "user informartion "+uname+" not exist in user table";
+                                url = "/SignIn.jsp";
+                            }
+                       else{
+                                msg = "user informartion "+uname+"  exist in user table";
+                                url = "/list_table.jsp";
+                       }
+                       sess.setAttribute("msg", msg);
+                       sess.setAttribute("user", user);
+                   }//end op="SignIn"
+            else
+                   if(code.equalsIgnoreCase("SignOut")){
+                       User user = null;
+                        url = "/list_table.jsp";
+                       msg = "user sign out";
+                       sess.setAttribute("msg", msg);
+                       sess.setAttribute("user", user);
+                   }//end op="Sign In_"
+                   else
+                    if(code.equalsIgnoreCase("Sign Up")){
+                        msg = "add new user  to table";
+                        sess.setAttribute("msg", msg);
+                        url = "/SignUp.jsp";
+                    }//end op="Sign In_" 
+            else
+                   if(code.equalsIgnoreCase("SignUp")){
+                       User u = new User(uid,uname,upass,uemail);
+                       int result = TestAccessoryDB.addNewUser(u);
+                       if(result >=1){
+                             System.out.println("Insert new user is Ok");
+                             msg = "uid ="+uid+" insert new user is OK";
+                            }
+                       else{
+                                 System.out.println("Insert new user is not Ok");
+                             msg = "uid ="+uid+" insert new user  NOT OK";
+                       }
+                       url = "/list_table.jsp";
+                       
+                       sess.setAttribute("msg", msg);
+                      sess.setAttribute("user", u);
+                       sess.setAttribute("uid", uid);
+                   }
          
                      
           this.getServletContext().getRequestDispatcher(url).forward(request, response);
