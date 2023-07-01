@@ -128,6 +128,57 @@ public class Cont extends HttpServlet {
                      sess.setAttribute("msg", msg);
                      url="/displaycart.jsp";
                  }
+             else
+                   if(code.equalsIgnoreCase("ViewCart")){
+              
+                     Cart cart = (Cart) sess.getAttribute("cart");
+                       System.out.println("cart="+cart);
+                     if(cart==null){
+                         cart= new Cart();
+                     
+                     }
+                  
+                     msg="View cart ";
+                     sess.setAttribute("cart", cart);
+                     sess.setAttribute("msg", msg);
+                     url="/displaycart.jsp";
+                   }
+                    else
+                   if(code.equalsIgnoreCase("+")){
+              
+                     Cart cart = (Cart) sess.getAttribute("cart");
+                     cart.increamentQuantity(Integer.parseInt(anum));
+                     msg="increment quantity";
+                     sess.setAttribute("cart", cart);
+                     sess.setAttribute("msg", msg);
+                     url="/displaycart.jsp";
+                   }
+                   else
+                   if(code.equalsIgnoreCase("-")){
+              
+                     Cart cart = (Cart) sess.getAttribute("cart");
+                     cart.decreamentQuantity(Integer.parseInt(anum));
+                     msg="decrement quantity";
+                     sess.setAttribute("cart", cart);
+                     sess.setAttribute("msg", msg);
+                     url="/displaycart.jsp";
+                   }
+                   else
+                   if(code.equalsIgnoreCase("x")){
+              
+                     Cart cart = (Cart) sess.getAttribute("cart");
+                     cart.removeC(Integer.parseInt(anum));
+                     msg="Remove from Cart";
+                     sess.setAttribute("cart", cart);
+                     sess.setAttribute("msg", msg);
+                     url="/displaycart.jsp";
+                   }//end op=x
+               else
+                   if(code.equalsIgnoreCase("Sign In")){
+                       msg = "Sign in Registered user";
+                       sess.setAttribute("msg", msg);
+                       url = "/SignIn.jsp";
+                   }//end op="Sign In_"
          
                      
           this.getServletContext().getRequestDispatcher(url).forward(request, response);

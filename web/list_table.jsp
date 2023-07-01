@@ -21,14 +21,14 @@
        
            <% if(user==null) { %>
             <h1> Project List - Hello User </h1>
-             <form action="Kuwait" method="get">
+             <form action="EgyptServlet" method="get">
                  <input type="submit" name="code" value="ViewCart"><br>
                  <input type="submit" name="code" value="Sign In"><br>
                  <input type="submit" name="code" value="Sign Up"><br>
              </form><br>
              <% } else { %>
               <h1> Project List -Hello <%=user.getUname() %> </h1>
-                <form action="Kuwait" method="get">
+                <form action="EgyptServlet" method="get">
                  <input type="submit" name="code" value="ViewCart"><br>
                  <input type="submit" name="code" value="SignOut"><br>
              </form><br>
