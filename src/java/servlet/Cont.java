@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Accessory;
+import model.Cart;
+import model.Line;
 
 
 
@@ -108,6 +110,23 @@ public class Cont extends HttpServlet {
                     sess.setAttribute("msg", msg);
                     sess.setAttribute("a", a);
                     sess.setAttribute("anum", anum);
+                 }
+            else
+                 if(code.equalsIgnoreCase("AddToCart")){
+                     Accessory a = TestAccessoryDB.searchAccessoryTable(Integer.parseInt(anum));
+                     Cart cart = (Cart) sess.getAttribute("cart");
+                     if(cart==null)
+                         cart= new Cart();
+                     
+                     System.out.println("cart="+cart);
+                     Line line = new Line();
+                     line.setA(a);
+                     System.out.println("line="+line);
+                     cart.addLine(line);
+                     msg="line added to cart successfully";
+                     sess.setAttribute("cart", cart);
+                     sess.setAttribute("msg", msg);
+                     url="/displaycart.jsp";
                  }
          
                      
