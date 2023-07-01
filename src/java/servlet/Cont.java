@@ -70,11 +70,28 @@ public class Cont extends HttpServlet {
                                  System.out.println("Insert is not Ok");
                              msg = "anum ="+anum+" insert accessory table NOT OK";
                        }
-                     url = "/Display_Accessory.jsp";
+                    url = "/Display_Accessory.jsp";
                     sess.setAttribute("msg", msg);
                     sess.setAttribute("a", a);
                     sess.setAttribute("anum", anum);
                    }
+            else
+                 if(code.equalsIgnoreCase("UpdateAccessoryRecord")){
+                            Accessory a = new Accessory(anum,aname,abrand,acolor,aquantity,aprice);
+                       int result = TestAccessoryDB.updateRecord(a);
+                       if(result >=1){
+                             System.out.println("update is Ok");
+                             msg = "anum ="+anum+" update accessory table OK";
+                            }
+                       else{
+                                 System.out.println("update is not Ok");
+                             msg = "anum ="+anum+" update accessory table NOT OK";
+                       }
+                    url = "/Display_Accessory.jsp";
+                    sess.setAttribute("msg", msg);
+                    sess.setAttribute("a", a);
+                    sess.setAttribute("anum", anum);
+                 }
          
                      
           this.getServletContext().getRequestDispatcher(url).forward(request, response);
