@@ -92,6 +92,23 @@ public class Cont extends HttpServlet {
                     sess.setAttribute("a", a);
                     sess.setAttribute("anum", anum);
                  }
+            else
+                         if(code.equalsIgnoreCase("DeleteAccessoryRecord")){
+                           Accessory a = new Accessory(anum,aname,abrand,acolor,aquantity,aprice);
+                       int result = TestAccessoryDB.deleteRecord(a);
+                       if(result >=1){
+                             System.out.println("delete is Ok");
+                             msg = "anum ="+anum+" delete accessory table OK";
+                            }
+                       else{
+                                 System.out.println("delete is not Ok");
+                             msg = "anum ="+anum+" delete accessory table NOT OK";
+                       }
+                       url = "/Display_Accessory.jsp";
+                    sess.setAttribute("msg", msg);
+                    sess.setAttribute("a", a);
+                    sess.setAttribute("anum", anum);
+                 }
          
                      
           this.getServletContext().getRequestDispatcher(url).forward(request, response);
