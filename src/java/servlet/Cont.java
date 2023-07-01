@@ -24,6 +24,7 @@ public class Cont extends HttpServlet {
             String url = "";
             String msg = "";
             String code = request.getParameter("code");
+            String anum = request.getParameter("anum");
 
             HttpSession sess = request.getSession();
             if(code.equalsIgnoreCase("list")){
@@ -33,9 +34,28 @@ public class Cont extends HttpServlet {
                 msg=  "listing table from database";
                 sess.setAttribute("msg", msg);
             }
+            else
+                if(code.equalsIgnoreCase("SearchByNumber")){
+                    Accessory a = TestAccessoryDB.searchAccessoryTable(Integer.parseInt(anum));
+                    
+                    if(a == null){
+                        System.out.println("anum ="+anum+" not exist in accessory table");
+                        msg = "anum ="+anum+" not exist in accessory table";
+                    }
+                    else{
+                       System.out.println("anum ="+anum+" exist in accessory table");
+                        msg = "anum ="+anum+" exist in accessory table";
+                        System.out.println(a);
+                        
+                    }
+                    url = "/Display_Accessory.jsp";
+                    sess.setAttribute("msg", msg);
+                    sess.setAttribute("a", a);
+                    sess.setAttribute("anum", anum);
+                    }
          
                      
-            this.getServletContext().getRequestDispatcher(url).forward(request, response);
+          this.getServletContext().getRequestDispatcher(url).forward(request, response);
         }
   
     @Override

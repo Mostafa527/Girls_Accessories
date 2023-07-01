@@ -34,7 +34,7 @@
                    <td><%=al.get(i).getAbrand()%></td> <td><%=al.get(i).getAcolor()%></td>
                    <td><%=al.get(i).getAquantity()%></td> <td><%=al.get(i).getAprice()%></td>
                    <td><img src=<%= "pics/"+al.get(i).getAnum()+".jpg" %> width="100" height="100" onerror="this.src='pics/accessory.jpg';"/>
-                          <form action="Kuwait" method="get">
+                          <form action="EgyptServlet" method="get">
                               <input type="hidden" name="anum" value=<%=al.get(i).getAnum() %> ><br>
                               <input type="submit" name="code" value="AddToCart"><br>                              
                        
