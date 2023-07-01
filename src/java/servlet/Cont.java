@@ -232,6 +232,20 @@ public class Cont extends HttpServlet {
                       sess.setAttribute("user", u);
                        sess.setAttribute("uid", uid);
                    }
+            else
+                   if(code.equalsIgnoreCase("CheckOut")){
+                       User user = (User) sess.getAttribute("user");
+                       if(user == null){
+                                msg = "user informartion "+uname+" not exist in user table";
+                                url = "/SignIn.jsp";
+                            }
+                       else{
+                                msg = "user informartion "+uname+"  exist in user table";
+                                url = "/CheckOut.jsp";
+                       }
+                       sess.setAttribute("msg", msg);
+                       sess.setAttribute("user", user);
+                   }//end op="SignIn"
          
                      
           this.getServletContext().getRequestDispatcher(url).forward(request, response);
